@@ -41,3 +41,4 @@ coverage/
 *.tgz
 *.tsbuildinfo
 .cache/
+.vite/

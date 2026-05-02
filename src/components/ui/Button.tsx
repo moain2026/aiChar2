@@ -20,10 +20,10 @@ const VARIANTS: Record<ButtonVariant, string> = {
 };
 
 const SIZES: Record<ButtonSize, string> = {
-  sm: 'h-8 px-3 text-sm gap-1.5 rounded-md',
-  md: 'h-10 px-4 text-sm gap-2 rounded-lg',
+  sm: 'h-9 md:h-8 px-3 text-sm gap-1.5 rounded-md',
+  md: 'h-11 md:h-10 px-4 text-sm gap-2 rounded-lg',
   lg: 'h-12 px-6 text-base gap-2 rounded-lg',
-  icon: 'h-10 w-10 rounded-lg',
+  icon: 'h-11 w-11 md:h-10 md:w-10 rounded-lg',
 };
 
 export interface ButtonProps extends HTMLMotionProps<'button'> {

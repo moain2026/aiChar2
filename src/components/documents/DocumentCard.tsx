@@ -98,7 +98,7 @@ export function DocumentCard({ document }: DocumentCardProps): JSX.Element {
               type="button"
               aria-label="Delete document"
               onClick={() => setConfirmOpen(true)}
-              className="opacity-0 group-hover:opacity-100 inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-danger-500/10 hover:text-danger-600 transition-all duration-200 focus-visible:opacity-100"
+              className="md:opacity-0 md:group-hover:opacity-100 inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-danger-500/10 hover:text-danger-600 active:bg-danger-500/20 transition-all duration-200 focus-visible:opacity-100 -mr-1"
             >
               <Trash2 className="h-4 w-4" />
             </button>

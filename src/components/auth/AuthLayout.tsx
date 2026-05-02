@@ -14,7 +14,7 @@ interface AuthLayoutProps {
 export function AuthLayout({ children }: AuthLayoutProps): JSX.Element {
   const { theme, toggleTheme } = useTheme();
   return (
-    <div className="relative min-h-screen w-full bg-background flex flex-col md:flex-row overflow-hidden">
+    <div className="relative min-h-dvh w-full bg-background flex flex-col md:flex-row overflow-hidden safe-px">
       {/* Decorative gradient blobs */}
       <div className="pointer-events-none absolute -top-40 -left-32 h-[28rem] w-[28rem] rounded-full bg-primary-500/20 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-32 right-0 h-[24rem] w-[24rem] rounded-full bg-purple-500/20 blur-3xl" />
@@ -25,7 +25,11 @@ export function AuthLayout({ children }: AuthLayoutProps): JSX.Element {
         type="button"
         onClick={toggleTheme}
         aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-        className="absolute top-4 right-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-card/60 backdrop-blur text-muted-foreground hover:text-foreground transition-colors"
+        className="absolute z-20 inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-card/60 backdrop-blur text-muted-foreground hover:text-foreground active:bg-muted transition-colors"
+        style={{
+          top: 'max(env(safe-area-inset-top, 0px), 1rem)',
+          right: 'max(env(safe-area-inset-right, 0px), 1rem)',
+        }}
       >
         {theme === 'dark' ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
       </button>
@@ -87,7 +91,13 @@ export function AuthLayout({ children }: AuthLayoutProps): JSX.Element {
       </div>
 
       {/* Right form panel */}
-      <div className="relative z-10 flex flex-1 items-center justify-center p-6 md:p-10">
+      <div
+        className="relative z-10 flex flex-1 items-center justify-center px-4 sm:px-6 md:p-10"
+        style={{
+          paddingTop: 'max(env(safe-area-inset-top, 0px), 4rem)',
+          paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 1.5rem)',
+        }}
+      >
         <div className="w-full max-w-md">{children}</div>
       </div>
     </div>

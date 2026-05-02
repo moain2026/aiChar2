@@ -95,16 +95,16 @@ export function ChatContainer(): JSX.Element {
       />
       <div className="flex flex-1 flex-col min-w-0 min-h-0">
         {isMobile && (
-          <div className="md:hidden flex items-center h-12 px-3 border-b border-border bg-background/80 backdrop-blur shrink-0">
+          <div className="md:hidden flex items-center h-12 px-2 border-b border-border bg-background/80 backdrop-blur shrink-0">
             <button
               type="button"
               aria-label="Open conversations"
               onClick={() => setDrawerOpen(true)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+              className="inline-flex tap-target items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80"
             >
               <Menu className="h-5 w-5" />
             </button>
-            <p className="ml-2 text-sm font-medium truncate">
+            <p className="ml-1 text-sm font-medium truncate flex-1 min-w-0">
               {conversations.find((c) => c.id === activeId)?.title ?? 'New chat'}
             </p>
           </div>

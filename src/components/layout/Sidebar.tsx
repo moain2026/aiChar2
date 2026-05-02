@@ -73,7 +73,7 @@ export function Sidebar(): JSX.Element {
               animate={{ x: 0 }}
               exit={{ x: '-100%' }}
               transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-              className="fixed inset-y-0 left-0 z-50 w-72 glass-strong border-r border-border shadow-2xl flex flex-col md:hidden"
+              className="fixed inset-y-0 left-0 z-50 w-[min(85vw,18rem)] glass-strong border-r border-border shadow-2xl flex flex-col md:hidden safe-pt safe-pb safe-pl"
             >
               <SidebarContent onClose={() => setOpen(false)} />
               <SidebarFooter user={user} onLogout={handleLogout} />
@@ -106,8 +106,8 @@ interface SidebarContentProps {
 function SidebarContent({ collapsed, onClose, onToggle }: SidebarContentProps): JSX.Element {
   return (
     <>
-      <div className="flex items-center justify-between h-16 px-4 border-b border-border shrink-0">
-        <div className={cn('flex items-center gap-2.5', collapsed && 'justify-center w-full')}>
+      <div className="flex items-center justify-between h-14 md:h-16 px-3 md:px-4 border-b border-border shrink-0">
+        <div className={cn('flex items-center gap-2.5 min-w-0', collapsed && 'justify-center w-full')}>
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-primary-500 to-purple-600 shadow-glow">
             <Sparkles className="h-5 w-5 text-white" strokeWidth={2.2} />
           </div>
@@ -125,9 +125,9 @@ function SidebarContent({ collapsed, onClose, onToggle }: SidebarContentProps): 
             type="button"
             aria-label="Close sidebar"
             onClick={onClose}
-            className="md:hidden inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="md:hidden inline-flex tap-target items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80 -mr-1.5"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         )}
         {onToggle && !collapsed && (
@@ -168,11 +168,11 @@ function SidebarContent({ collapsed, onClose, onToggle }: SidebarContentProps): 
                 className={({ isActive }) =>
                   cn(
                     'group relative flex items-center gap-3 rounded-lg text-sm font-medium transition-colors',
-                    'h-10',
+                    'h-11 md:h-10',
                     collapsed ? 'justify-center px-0' : 'px-3',
                     isActive
                       ? 'bg-primary-500/10 text-primary-600 dark:text-primary-300'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground',
+                      : 'text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80',
                   )
                 }
                 title={collapsed ? item.label : undefined}

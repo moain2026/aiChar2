@@ -37,7 +37,7 @@ export function PageWrapper({
       transition={{ duration: 0.25, ease: 'easeOut' }}
       className={cn(
         'flex-1 w-full mx-auto',
-        padded && 'px-4 md:px-6 lg:px-8 py-6 md:py-8',
+        padded && 'px-4 md:px-6 lg:px-8 py-5 md:py-8 safe-pl safe-pr',
         MAX_WIDTHS[maxWidth],
         className,
       )}

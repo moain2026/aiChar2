@@ -70,7 +70,12 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
   }
 
   return (
-    <div className="px-4 md:px-8 pb-4 pt-2">
+    <div
+      className="px-3 md:px-8 pt-2 bg-gradient-to-t from-background via-background to-transparent"
+      style={{
+        paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 1rem)',
+      }}
+    >
       <div className="mx-auto max-w-3xl">
         <motion.div
           layout
@@ -88,9 +93,15 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
             disabled={disabled}
             placeholder={placeholder}
             rows={1}
+            // iOS-specific attributes for better mobile UX
+            autoCapitalize="sentences"
+            autoCorrect="on"
+            spellCheck={true}
+            enterKeyHint="send"
             className={cn(
               'flex-1 resize-none bg-transparent border-0 outline-none',
-              'text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/70',
+              // Use 16px on mobile to prevent iOS zoom-on-focus, 14px on desktop.
+              'text-base md:text-sm leading-relaxed text-foreground placeholder:text-muted-foreground/70',
               'min-h-[24px] max-h-[156px] py-1.5',
               'no-scrollbar',
             )}
@@ -101,7 +112,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
               type="button"
               onClick={stop}
               whileTap={{ scale: 0.95 }}
-              className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-danger-500 text-white shadow-md hover:bg-danger-600"
+              className="inline-flex h-10 w-10 md:h-9 md:w-9 shrink-0 items-center justify-center rounded-lg bg-danger-500 text-white shadow-md hover:bg-danger-600 active:bg-danger-700"
               aria-label="Stop generating"
             >
               <Square className="h-3.5 w-3.5" fill="currentColor" />
@@ -114,9 +125,9 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
               disabled={!value.trim() || disabled}
               whileTap={value.trim() ? { scale: 0.95 } : undefined}
               className={cn(
-                'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-all',
+                'inline-flex h-10 w-10 md:h-9 md:w-9 shrink-0 items-center justify-center rounded-lg transition-all',
                 value.trim()
-                  ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-glow hover:from-primary-600 hover:to-primary-700'
+                  ? 'bg-gradient-to-br from-primary-500 to-primary-600 text-white shadow-glow hover:from-primary-600 hover:to-primary-700 active:from-primary-700 active:to-primary-800'
                   : 'bg-muted text-muted-foreground cursor-not-allowed',
               )}
               aria-label="Send message"
@@ -125,7 +136,7 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
             </motion.button>
           )}
         </motion.div>
-        <div className="mt-1.5 flex items-center justify-between text-2xs text-muted-foreground px-1">
+        <div className="mt-1.5 hidden md:flex items-center justify-between text-2xs text-muted-foreground px-1">
           <span>
             <kbd className="rounded border border-border bg-muted px-1 py-0.5 font-mono text-[10px]">
               Enter
@@ -136,6 +147,12 @@ export const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(function Ch
             </kbd>{' '}
             for new line
           </span>
+          <span className={cn('tabular-nums', value.length > MAX_LENGTH * 0.9 && 'text-warning-600')}>
+            {value.length}/{MAX_LENGTH}
+          </span>
+        </div>
+        {/* Mobile-only counter */}
+        <div className="md:hidden mt-1 flex justify-end text-2xs text-muted-foreground px-1">
           <span className={cn('tabular-nums', value.length > MAX_LENGTH * 0.9 && 'text-warning-600')}>
             {value.length}/{MAX_LENGTH}
           </span>

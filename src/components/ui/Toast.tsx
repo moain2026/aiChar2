@@ -42,13 +42,13 @@ function ToastItem({ toast }: { toast: ToastType }): JSX.Element {
   return (
     <motion.div
       layout
-      initial={{ opacity: 0, x: 32, scale: 0.95 }}
-      animate={{ opacity: 1, x: 0, scale: 1 }}
-      exit={{ opacity: 0, x: 32, scale: 0.95 }}
+      initial={{ opacity: 0, y: -16, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -16, scale: 0.95 }}
       transition={{ type: 'spring', stiffness: 400, damping: 32 }}
       role="alert"
       className={cn(
-        'pointer-events-auto flex items-start gap-3 w-80 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-md glass',
+        'pointer-events-auto flex items-start gap-3 w-full sm:w-80 rounded-xl border px-4 py-3 shadow-lg backdrop-blur-md glass',
         TONES[toast.type],
       )}
     >
@@ -63,9 +63,9 @@ function ToastItem({ toast }: { toast: ToastType }): JSX.Element {
         type="button"
         aria-label="Dismiss"
         onClick={() => dismiss(toast.id)}
-        className="shrink-0 rounded p-0.5 text-muted-foreground/80 hover:text-foreground hover:bg-foreground/5 transition-colors"
+        className="shrink-0 inline-flex h-8 w-8 items-center justify-center rounded text-muted-foreground/80 hover:text-foreground hover:bg-foreground/5 active:bg-foreground/10 transition-colors -mr-1.5 -mt-1"
       >
-        <X className="h-3.5 w-3.5" />
+        <X className="h-4 w-4" />
       </button>
     </motion.div>
   );
@@ -79,7 +79,12 @@ export function ToastViewport(): JSX.Element | null {
   if (typeof document === 'undefined') return null;
 
   return createPortal(
-    <div className="pointer-events-none fixed top-4 right-4 z-[100] flex flex-col gap-2 max-h-screen overflow-hidden">
+    <div
+      className="pointer-events-none fixed inset-x-0 sm:inset-x-auto sm:right-4 z-[100] flex flex-col gap-2 max-h-screen overflow-hidden px-3 sm:px-0"
+      style={{
+        top: 'max(env(safe-area-inset-top, 0px), 1rem)',
+      }}
+    >
       <AnimatePresence initial={false}>
         {toasts.map((t) => (
           <ToastItem key={t.id} toast={t} />
