@@ -1,0 +1,247 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   THEME TOKENS
+   ========================================================================== */
+@layer base {
+  :root {
+    /* Light theme */
+    --color-background: 250 250 252;
+    --color-foreground: 17 24 39;
+
+    --color-muted: 244 244 247;
+    --color-muted-foreground: 107 114 128;
+
+    --color-card: 255 255 255;
+    --color-card-foreground: 17 24 39;
+
+    --color-border: 228 228 235;
+    --color-input: 228 228 235;
+    --color-ring: 99 102 241;
+
+    --color-glass: 255 255 255;
+    --color-glass-border: 255 255 255;
+  }
+
+  .dark {
+    /* Dark theme */
+    --color-background: 9 9 16;
+    --color-foreground: 240 240 245;
+
+    --color-muted: 24 24 32;
+    --color-muted-foreground: 156 163 175;
+
+    --color-card: 17 17 24;
+    --color-card-foreground: 240 240 245;
+
+    --color-border: 38 38 48;
+    --color-input: 32 32 42;
+    --color-ring: 129 140 248;
+
+    --color-glass: 24 24 32;
+    --color-glass-border: 60 60 75;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    font-feature-settings: 'rlig' 1, 'calt' 1, 'ss01' 1;
+    transition:
+      background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Selection styling */
+  ::selection {
+    @apply bg-primary-500/25 text-foreground;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-border rounded-full;
+    transition: background-color 0.2s;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  /* Focus visible */
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Remove number input spinners */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   COMPONENT UTILITIES
+   ========================================================================== */
+@layer components {
+  /* Glassmorphism card */
+  .glass {
+    background-color: rgb(var(--color-glass) / 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgb(var(--color-glass-border) / 0.5);
+  }
+
+  .glass-strong {
+    background-color: rgb(var(--color-glass) / 0.85);
+    backdrop-filter: blur(28px) saturate(200%);
+    -webkit-backdrop-filter: blur(28px) saturate(200%);
+    border: 1px solid rgb(var(--color-glass-border) / 0.6);
+  }
+
+  /* Gradient text */
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-br from-primary-500 via-primary-600 to-purple-600;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .skeleton::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgb(var(--color-glass) / 0.4) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Mesh background */
+  .bg-mesh {
+    background-color: rgb(var(--color-background));
+    background-image: var(--tw-gradient-mesh, none);
+  }
+
+  /* Streaming cursor */
+  .streaming-cursor::after {
+    content: '▍';
+    @apply ml-0.5 inline-block animate-pulse text-primary-500;
+  }
+
+  /* Hidden scrollbar utility */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* ==========================================================================
+   PROSE / MARKDOWN
+   ========================================================================== */
+@layer components {
+  .prose-chat {
+    @apply text-[0.95rem] leading-relaxed text-foreground;
+  }
+  .prose-chat p {
+    @apply my-2 first:mt-0 last:mb-0;
+  }
+  .prose-chat strong {
+    @apply font-semibold text-foreground;
+  }
+  .prose-chat em {
+    @apply italic;
+  }
+  .prose-chat ul,
+  .prose-chat ol {
+    @apply my-2 ml-5;
+  }
+  .prose-chat ul {
+    @apply list-disc;
+  }
+  .prose-chat ol {
+    @apply list-decimal;
+  }
+  .prose-chat li {
+    @apply my-1;
+  }
+  .prose-chat h1,
+  .prose-chat h2,
+  .prose-chat h3 {
+    @apply font-semibold text-foreground my-3;
+  }
+  .prose-chat h1 {
+    @apply text-xl;
+  }
+  .prose-chat h2 {
+    @apply text-lg;
+  }
+  .prose-chat h3 {
+    @apply text-base;
+  }
+  .prose-chat code {
+    @apply px-1.5 py-0.5 rounded bg-muted text-primary-600 dark:text-primary-300 font-mono text-[0.85em];
+  }
+  .prose-chat pre {
+    @apply my-3 rounded-lg overflow-hidden;
+  }
+  .prose-chat pre code {
+    @apply p-0 bg-transparent text-inherit;
+  }
+  .prose-chat blockquote {
+    @apply pl-4 my-3 border-l-2 border-primary-500/40 text-muted-foreground italic;
+  }
+  .prose-chat a {
+    @apply text-primary-600 dark:text-primary-400 underline underline-offset-2 hover:text-primary-700;
+  }
+  .prose-chat hr {
+    @apply my-4 border-border;
+  }
+  .prose-chat table {
+    @apply my-3 border-collapse w-full text-sm;
+  }
+  .prose-chat th,
+  .prose-chat td {
+    @apply border border-border px-3 py-1.5 text-left;
+  }
+  .prose-chat th {
+    @apply bg-muted font-semibold;
+  }
+}
+
+/* ==========================================================================
+   ACCESSIBILITY
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
