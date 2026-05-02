@@ -11,9 +11,9 @@ interface AppShellProps {
  */
 export function AppShell({ children }: AppShellProps): JSX.Element {
   return (
-    <div className="flex h-full min-h-screen w-full bg-background">
+    <div className="flex w-full bg-background min-h-dvh">
       <Sidebar />
-      <div className="flex flex-col flex-1 min-w-0 min-h-screen">
+      <div className="flex flex-col flex-1 min-w-0 min-h-dvh">
         <Header />
         <div className="flex-1 flex flex-col min-h-0">{children}</div>
       </div>

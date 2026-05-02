@@ -60,7 +60,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
       <div
         className={cn(
           'group flex items-center gap-2 rounded-lg border bg-card px-3 transition-all duration-200',
-          'h-10',
+          'h-11 md:h-10',
           VARIANT_STYLES[resolvedVariant],
           disabled && 'opacity-60 cursor-not-allowed bg-muted',
           className,
@@ -78,7 +78,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
           aria-invalid={resolvedVariant === 'error' || undefined}
           aria-describedby={(error || helper) ? helperId : undefined}
           className={cn(
-            'w-full bg-transparent border-0 outline-none text-sm text-foreground',
+            'w-full bg-transparent border-0 outline-none text-foreground',
+            // 16px on mobile prevents iOS auto-zoom on focus, 14px on >=md.
+            'text-base md:text-sm',
             'placeholder:text-muted-foreground/70',
             'disabled:cursor-not-allowed',
           )}

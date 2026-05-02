@@ -27,13 +27,21 @@ export function Header(): JSX.Element {
     Object.entries(TITLES).find(([path]) => location.pathname.startsWith(path))?.[1] ?? '';
 
   return (
-    <header className="sticky top-0 z-30 h-16 border-b border-border bg-background/70 backdrop-blur-md flex items-center px-4 md:px-6 gap-3">
+    <header
+      className="sticky top-0 z-30 border-b border-border bg-background/70 backdrop-blur-md flex items-center px-3 md:px-6 gap-2 md:gap-3"
+      style={{
+        paddingTop: 'env(safe-area-inset-top, 0px)',
+        paddingLeft: 'max(env(safe-area-inset-left, 0px), 0.75rem)',
+        paddingRight: 'max(env(safe-area-inset-right, 0px), 0.75rem)',
+        height: 'calc(4rem + env(safe-area-inset-top, 0px))',
+      }}
+    >
       {isMobile && (
         <button
           type="button"
           aria-label="Open menu"
           onClick={() => setSidebarOpen(true)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="inline-flex tap-target items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80 -ml-1.5"
         >
           <Menu className="h-5 w-5" />
         </button>

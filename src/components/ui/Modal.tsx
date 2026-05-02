@@ -58,10 +58,14 @@ export function Modal({
     <AnimatePresence>
       {open && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-3 sm:p-4"
           role="dialog"
           aria-modal="true"
           aria-labelledby={title ? 'modal-title' : undefined}
+          style={{
+            paddingTop: 'max(env(safe-area-inset-top, 0px), 0.75rem)',
+            paddingBottom: 'max(env(safe-area-inset-bottom, 0px), 0.75rem)',
+          }}
         >
           {/* Backdrop */}
           <motion.div
@@ -75,19 +79,19 @@ export function Modal({
 
           {/* Panel */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 8 }}
+            initial={{ opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 8 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
             transition={{ type: 'spring', stiffness: 320, damping: 28 }}
             className={cn(
-              'relative w-full glass-strong rounded-2xl shadow-2xl border border-border',
+              'relative w-full glass-strong rounded-2xl shadow-2xl border border-border max-h-[calc(100dvh-2rem)] overflow-y-auto',
               SIZES[size],
               className,
             )}
           >
-            <div className="p-6">
+            <div className="p-5 sm:p-6">
               {(title || description) && (
-                <div className="mb-4 pr-8">
+                <div className="mb-4 pr-10">
                   {title && (
                     <h2 id="modal-title" className="text-lg font-semibold text-foreground">
                       {title}
@@ -99,13 +103,17 @@ export function Modal({
                 </div>
               )}
               {children && <div className="text-sm text-foreground">{children}</div>}
-              {footer && <div className="mt-6 flex items-center justify-end gap-2">{footer}</div>}
+              {footer && (
+                <div className="mt-6 flex flex-col-reverse sm:flex-row items-stretch sm:items-center sm:justify-end gap-2">
+                  {footer}
+                </div>
+              )}
             </div>
             <button
               type="button"
               aria-label="Close"
               onClick={onClose}
-              className="absolute top-4 right-4 inline-flex items-center justify-center h-8 w-8 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+              className="absolute top-3 right-3 inline-flex items-center justify-center h-9 w-9 rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80 transition-colors"
             >
               <X className="h-4 w-4" />
             </button>

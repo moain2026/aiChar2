@@ -49,9 +49,9 @@ export function ConversationSidebar({
             type="button"
             aria-label="Close"
             onClick={onClose}
-            className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="inline-flex tap-target items-center justify-center rounded-lg text-muted-foreground hover:bg-muted hover:text-foreground active:bg-muted/80 -mr-1.5"
           >
-            <X className="h-4 w-4" />
+            <X className="h-5 w-5" />
           </button>
         )}
       </div>
@@ -84,12 +84,20 @@ export function ConversationSidebar({
                     exit={{ opacity: 0, scale: 0.97 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <button
-                      type="button"
+                    <div
+                      role="button"
+                      tabIndex={0}
                       onClick={() => handleSelect(conv.id)}
+                      onKeyDown={(event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          handleSelect(conv.id);
+                        }
+                      }}
                       className={cn(
-                        'group relative w-full flex items-start gap-2.5 rounded-lg px-2.5 py-2 text-left transition-colors',
-                        isActive ? 'bg-primary-500/10' : 'hover:bg-muted',
+                        'group relative w-full flex items-start gap-2.5 rounded-lg px-2.5 py-2.5 text-left transition-colors cursor-pointer',
+                        'min-h-[44px]',
+                        isActive ? 'bg-primary-500/10' : 'hover:bg-muted active:bg-muted/80',
                       )}
                     >
                       <MessageSquare
@@ -119,11 +127,11 @@ export function ConversationSidebar({
                           event.stopPropagation();
                           setPendingDelete(conv.id);
                         }}
-                        className="opacity-0 group-hover:opacity-100 inline-flex h-6 w-6 items-center justify-center rounded text-muted-foreground hover:bg-danger-500/10 hover:text-danger-600 transition-all"
+                        className="md:opacity-0 md:group-hover:opacity-100 inline-flex h-8 w-8 items-center justify-center rounded text-muted-foreground hover:bg-danger-500/10 hover:text-danger-600 active:bg-danger-500/20 transition-all"
                       >
-                        <Trash2 className="h-3.5 w-3.5" />
+                        <Trash2 className="h-4 w-4" />
                       </button>
-                    </button>
+                    </div>
                   </motion.li>
                 );
               })}
@@ -152,7 +160,7 @@ export function ConversationSidebar({
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
                 transition={{ type: 'spring', stiffness: 320, damping: 32 }}
-                className="fixed inset-y-0 left-0 z-50 w-72 glass-strong border-r border-border shadow-2xl flex flex-col"
+                className="fixed inset-y-0 left-0 z-50 w-[min(85vw,18rem)] glass-strong border-r border-border shadow-2xl flex flex-col safe-pt safe-pb safe-pl"
               >
                 {content}
               </motion.aside>

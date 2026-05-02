@@ -23,6 +23,15 @@
 
     --color-glass: 255 255 255;
     --color-glass-border: 255 255 255;
+
+    /* Safe-area insets — fall back to 0 on devices without a notch. */
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-left: env(safe-area-inset-left, 0px);
+    --safe-area-right: env(safe-area-inset-right, 0px);
+
+    /* Dynamic viewport height fallback for older browsers. */
+    --vh: 1vh;
   }
 
   .dark {
@@ -53,6 +62,8 @@
     -webkit-tap-highlight-color: transparent;
     text-rendering: optimizeLegibility;
     scroll-behavior: smooth;
+    /* Prevent overscroll bounce on iOS while still allowing internal scrolling. */
+    overscroll-behavior-y: none;
   }
 
   body {
@@ -61,6 +72,18 @@
     transition:
       background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
       color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Prevent iOS overscroll bounce on the body. */
+    overscroll-behavior-y: none;
+  }
+
+  /* iOS Safari: prevent automatic font-size zooming on input focus.
+     The trick is keeping the *computed* font-size at >=16px on iOS. */
+  @supports (-webkit-touch-callout: none) {
+    input,
+    textarea,
+    select {
+      font-size: 16px;
+    }
   }
 
   /* Selection styling */
@@ -156,6 +179,43 @@
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* ----- Mobile-first safe-area helpers ----- */
+  .safe-pt {
+    padding-top: max(env(safe-area-inset-top, 0px), 0.25rem);
+  }
+  .safe-pb {
+    padding-bottom: max(env(safe-area-inset-bottom, 0px), 0.25rem);
+  }
+  .safe-pl {
+    padding-left: env(safe-area-inset-left, 0px);
+  }
+  .safe-pr {
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+  .safe-px {
+    padding-left: env(safe-area-inset-left, 0px);
+    padding-right: env(safe-area-inset-right, 0px);
+  }
+
+  /* Use the new dynamic viewport unit on supporting browsers (iOS 15.4+,
+     modern Chrome/Firefox); fall back to 100vh elsewhere.
+     This avoids the "100vh underneath the iOS bottom toolbar" issue. */
+  .h-dvh {
+    height: 100vh; /* fallback */
+    height: 100dvh;
+  }
+  .min-h-dvh {
+    min-height: 100vh; /* fallback */
+    min-height: 100dvh;
+  }
+
+  /* Ensure tap targets are at least 44×44 px (Apple HIG / WCAG 2.5.5).
+     Apply to icon-only controls that would otherwise be smaller on mobile. */
+  .tap-target {
+    min-width: 44px;
+    min-height: 44px;
   }
 }
 

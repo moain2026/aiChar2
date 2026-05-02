@@ -88,34 +88,43 @@ export function DocumentList({ isLoading, onUploadCta }: DocumentListProps): JSX
           </Button>
           <AnimatePresence>
             {sortMenuOpen && (
-              <motion.ul
-                initial={{ opacity: 0, y: -4, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: -4, scale: 0.97 }}
-                transition={{ duration: 0.15 }}
-                role="menu"
-                className="absolute right-0 z-20 mt-2 w-48 overflow-hidden rounded-lg border border-border bg-card shadow-lg"
-              >
-                {(Object.keys(SORT_LABELS) as SortOption[]).map((opt) => (
-                  <li key={opt}>
-                    <button
-                      type="button"
-                      role="menuitemradio"
-                      aria-checked={sort === opt}
-                      onClick={() => {
-                        setSort(opt);
-                        setSortMenuOpen(false);
-                      }}
-                      className={cn(
-                        'block w-full px-3 py-2 text-left text-sm hover:bg-muted',
-                        sort === opt && 'text-primary-600 dark:text-primary-400 font-medium',
-                      )}
-                    >
-                      {SORT_LABELS[opt]}
-                    </button>
-                  </li>
-                ))}
-              </motion.ul>
+              <>
+                {/* Click-outside backdrop (mobile-friendly) */}
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setSortMenuOpen(false)}
+                  className="fixed inset-0 z-10 cursor-default"
+                />
+                <motion.ul
+                  initial={{ opacity: 0, y: -4, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -4, scale: 0.97 }}
+                  transition={{ duration: 0.15 }}
+                  role="menu"
+                  className="absolute right-0 z-20 mt-2 w-52 overflow-hidden rounded-lg border border-border bg-card shadow-lg"
+                >
+                  {(Object.keys(SORT_LABELS) as SortOption[]).map((opt) => (
+                    <li key={opt}>
+                      <button
+                        type="button"
+                        role="menuitemradio"
+                        aria-checked={sort === opt}
+                        onClick={() => {
+                          setSort(opt);
+                          setSortMenuOpen(false);
+                        }}
+                        className={cn(
+                          'block w-full px-3 py-2.5 text-left text-sm hover:bg-muted active:bg-muted/80 min-h-[44px]',
+                          sort === opt && 'text-primary-600 dark:text-primary-400 font-medium bg-primary-500/5',
+                        )}
+                      >
+                        {SORT_LABELS[opt]}
+                      </button>
+                    </li>
+                  ))}
+                </motion.ul>
+              </>
             )}
           </AnimatePresence>
         </div>

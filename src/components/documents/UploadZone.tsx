@@ -102,10 +102,10 @@ export function UploadZone({ className, compact = false }: UploadZoneProps): JSX
     <motion.div
       {...getRootProps({
         className: cn(
-          'group relative cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed p-10 text-center transition-all duration-300',
+          'group relative cursor-pointer overflow-hidden rounded-2xl border-2 border-dashed p-6 sm:p-10 text-center transition-all duration-300',
           isDragActive
             ? 'border-primary-500 bg-primary-500/5 scale-[1.01]'
-            : 'border-border hover:border-primary-500/60 hover:bg-muted/30',
+            : 'border-border hover:border-primary-500/60 hover:bg-muted/30 active:bg-muted/40',
           isDragReject && 'border-danger-500 bg-danger-500/5',
           className,
         ),
@@ -120,17 +120,23 @@ export function UploadZone({ className, compact = false }: UploadZoneProps): JSX
           y: isDragActive ? -4 : 0,
         }}
         transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-        className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/15 to-purple-500/15 ring-1 ring-primary-500/20 text-primary-500"
+        className="mx-auto mb-4 flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-primary-500/15 to-purple-500/15 ring-1 ring-primary-500/20 text-primary-500"
       >
-        <CloudUpload className="h-8 w-8" strokeWidth={1.75} />
+        <CloudUpload className="h-7 w-7 sm:h-8 sm:w-8" strokeWidth={1.75} />
       </motion.div>
       <h3 className="text-base font-semibold">
-        {isDragActive ? 'Drop to upload' : 'Drag & drop files here'}
+        {isDragActive ? 'Drop to upload' : (
+          <>
+            <span className="hidden sm:inline">Drag &amp; drop files here</span>
+            <span className="sm:hidden">Tap to upload files</span>
+          </>
+        )}
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        or{' '}
+        <span className="hidden sm:inline">or </span>
         <span className="font-medium text-primary-600 dark:text-primary-400">
-          click to browse
+          <span className="hidden sm:inline">click to browse</span>
+          <span className="sm:hidden">browse from your device</span>
         </span>
       </p>
       <p className="mt-3 text-xs text-muted-foreground">

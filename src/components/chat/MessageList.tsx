@@ -99,7 +99,7 @@ export function MessageList({ onSuggestionSelect }: MessageListProps): JSX.Eleme
       <div
         ref={containerRef}
         onScroll={handleScroll}
-        className="absolute inset-0 overflow-y-auto px-4 md:px-8 py-6"
+        className="absolute inset-0 overflow-y-auto overscroll-contain px-3 md:px-8 py-4 md:py-6"
       >
         <div className="mx-auto max-w-3xl space-y-6">
           {groups.map((group, gi) => (

@@ -46,7 +46,7 @@ function MessageBubbleImpl({ message }: MessageBubbleProps): JSX.Element {
       )}
 
       {/* Body */}
-      <div className={cn('max-w-[85%] sm:max-w-[78%] min-w-0', isUser && 'flex flex-col items-end')}>
+      <div className={cn('max-w-[calc(100%-3rem)] sm:max-w-[78%] min-w-0', isUser && 'flex flex-col items-end')}>
         <div
           className={cn(
             'relative inline-block rounded-2xl px-4 py-3 shadow-card',
@@ -96,7 +96,7 @@ function MessageBubbleImpl({ message }: MessageBubbleProps): JSX.Element {
               type="button"
               onClick={handleCopy}
               aria-label={copied ? 'Copied' : 'Copy message'}
-              className="opacity-0 group-hover:opacity-100 inline-flex items-center gap-1 rounded px-1.5 py-0.5 hover:bg-muted hover:text-foreground transition-all"
+              className="md:opacity-0 md:group-hover:opacity-100 inline-flex items-center gap-1 rounded px-2 py-1 hover:bg-muted hover:text-foreground active:bg-muted/80 transition-all"
             >
               {copied ? (
                 <>
